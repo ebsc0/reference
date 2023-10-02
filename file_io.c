@@ -14,6 +14,7 @@ int main(int argc, char** argv) {
     if(f_int_pairs == NULL) return 1;
     for(int i = 0; i < IN_FILE_SIZE; i++)
     {
+        /* write random pairs of ints*/
         fprintf(f_int_pairs, "%d, %d\n", rand_int(0, 10), rand_int(0, 10));
     }
     fclose(f_int_pairs);
@@ -28,11 +29,12 @@ int main(int argc, char** argv) {
 
     /* read in_file, perform calculations and output to out_file */
     int i1, i2;
-    while(fscanf(f_in, "%d, %d\n", &i1, &i2) == 2)
+    while(fscanf(f_in, "%d, %d\n", &i1, &i2) == 2) /* read from f_in until we do not read 2 values. Can instead check for EOF */
     {
-        fprintf(f_out, "%d * %d = %d\n", i1, i2, i1*i2);
+        fprintf(f_out, "%d * %d = %d\n", i1, i2, i1*i2); /* write to f_out the multiplication of the 2 read in values */
     }
 
+    /* close the files */
     fclose(f_in);
     fclose(f_out);
 
