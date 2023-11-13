@@ -4,7 +4,7 @@ LINKER = gcc
 LIB = -lz
 
 # make all
-all: file_io.out fork.out signal_handling.out mailbox.out
+all: file_io.out fork.out signal_handling.out mailbox.out socket_client.out socket_server.out
 
 # link object file(s) and librarie(s) and create executable
 file_io.out: file_io.o
@@ -19,6 +19,12 @@ signal_handling.out: signal_handling.o
 mailbox.out: mailbox.o
 	$(LINKER) -o mailbox.out mailbox.o
 
+socket_client.out: socket_client.o
+	$(LINKER) -o socket_client.out socket_client.o
+
+socket_server.out: socket_server.o
+	$(LINKER) -o socket_server.out socket_server.o
+
 # compile object file from source file(s)
 file_io.o: file_io.c common.h
 	$(COMPILER) $(COMPILER_FLAGS) -o file_io.o file_io.c
@@ -31,6 +37,12 @@ signal_handling.o: signal_handling.c common.h
 
 mailbox.o: mailbox.c common.h
 	$(COMPILER) $(COMPILER_FLAGS) -o mailbox.o mailbox.c
+
+socket_client.o: socket_client.c common.h
+	$(COMPILER) $(COMPILER_FLAGS) -o socket_client.o socket_client.c
+
+socket_server.o: socket_server.c common.h
+	$(COMPILER) $(COMPILER_FLAGS) -o socket_server.o socket_server.c
 
 # make clean
 .PHONY: clean
