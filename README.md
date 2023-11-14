@@ -9,6 +9,7 @@
 |3|signal_handling.c|signal, raise, kill|handle a signal when called|
 |4|mailbox.c|msgget, msgsnd, msgrcv, msgctl|create mailbox and enqueue (send) and deque (recieve) messages between processes|
 |5|socket_client.c, socket_server.c|socket, getaddrinfo, freeaddrinfo, connect, bind, listen, accept, close, send, recv|create a byte stream socket connection between client and server and send data between|
+|6|curl.c|curl_global_init, curl_easy_init, curl_easy_setopt, curl_easy_perform, curl_easy_cleanup, curl_global_cleanup|use libcurl to get webpage|
 
 ## Notes
 
@@ -60,6 +61,33 @@ uint32_t htonl(uint32_t hostint32) /* translate 4 byte int to network format */
 uint16_t htons(uint16_t hostint16) /* translate 2 byte int to network format */
 uint32_t ntohl(uint32_t netint32) /* translate 4 byte int to host format */
 uint16_t ntohs(uint16_t netint16) /* translate 2 byte int to host format */
+```
+
+### cURL
+[cURL](https://curl.se/libcurl/) is a client-side URL transfer library.
+
+#### Boilerplate
+```c
+/* 1. instantiate cURL handler */
+CURL *curl; 
+
+/* 2. initialize curl global */
+curl_global_init(CURL_GLOBAL_DEFAULT);
+
+/* 3. initialize curl easy */
+curl = curl_easy_init(); 
+
+/* 4. use setopt to set url */
+curl_easy_setopt(curl, CURLOPT_URL, "https://curl.se/libcurl/");
+
+/* 5. perform request */
+res = curl_easy_perform(curl);
+
+/* 6. cleanup easy */
+curl_easy_cleanup(curl); 
+
+/* 7. cleanup global */
+curl_global_cleanup(); 
 ```
 
 ### Consumer Producer Problem
