@@ -1,4 +1,17 @@
-# Reference
+<div align="center">
+<pre>
+  ____  _____ _____ _____ ____  _____ _   _  ____ _____ 
+ |  _ \| ____|  ___| ____|  _ \| ____| \ | |/ ___| ____|
+ | |_) |  _| | |_  |  _| | |_) |  _| |  \| | |   |  _|  
+ |  _ <| |___|  _| | |___|  _ <| |___| |\  | |___| |___ 
+ |_| \_|_____|_|   |_____|_| \_|_____|_| \_|\____|_____|
+</pre>
+</div>
+A source of common coding practices noted for reference.
+
+## Sources
+- [The Little Book of Semaphores](https://greenteapress.com/semaphores/LittleBookOfSemaphores.pdf)
+- [UWaterloo ECE252 course playlist](https://www.youtube.com/playlist?list=PLFCH6yhq9yAHFaI00FrrgG0dPg8a5SjTJ)
 
 ## Files
 ||file|function(s)|description|

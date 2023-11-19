@@ -41,8 +41,8 @@ int main(int argc, char** argv)
     }
 
     /* recieve message from server */
-    int message;
-    if(recv(sockfd, &message, sizeof(message), 0) != 0)
+    char* message;
+    if(recv(sockfd, message, strlen(message), 0) == -1)
     {
         perror("recv failed");
         freeaddrinfo(server);
@@ -50,7 +50,7 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    printf("Client: recieved %d from server...", ntohl(message));
+    printf("Client: recieved %s from server...", message);
     freeaddrinfo(server);
     close(sockfd);
 
