@@ -14,15 +14,18 @@ A source of common coding practices noted for reference.
 - [UWaterloo ECE252 course playlist](https://www.youtube.com/playlist?list=PLFCH6yhq9yAHFaI00FrrgG0dPg8a5SjTJ)
 
 ## Files
-||file|function(s)|description|
-|---|---|---|---|
-|0|common.h|rand_int|misc functions for general use|
-|1|file_io.c|fopen, fclose, fprintf, fscanf|open/close files; read from file and write to file|
-|2|fork.c|fork, wait|create a parent and child process and get their return values|
-|3|signal_handling.c|signal, raise, kill|handle a signal when called|
-|4|mailbox.c|msgget, msgsnd, msgrcv, msgctl|create mailbox and enqueue (send) and deque (recieve) messages between processes|
-|5|socket_client.c, socket_server.c|socket, getaddrinfo, freeaddrinfo, connect, bind, listen, accept, close, send, recv|create a byte stream socket connection between client and server and send data between|
-|6|curl.c|curl_global_init, curl_easy_init, curl_easy_setopt, curl_easy_perform, curl_easy_cleanup, curl_global_cleanup|use libcurl to get webpage|
+||subject|file|function(s)|description|
+|---|---|---|---|---|
+|0|misc|common.h|rand_int|misc functions for general use|
+|1|file IO|file_io.c|fopen, fclose, fprintf, fscanf|open/close files; read from file and write to file|
+|2|processes|fork.c|fork, wait|create a parent and child process and get their return values|
+|3|signals|signal_handling.c|signal, raise, kill|handle a signal when called|
+|4|mailbox|mailbox.c|msgget, msgsnd, msgrcv, msgctl|create mailbox and enqueue (send) and deque (recieve) messages between processes|
+|5|sockets|socket_client.c, socket_server.c|socket, getaddrinfo, freeaddrinfo, connect, bind, listen, accept, close, send, recv|create a byte stream socket connection between client and server and send data between|
+|6|cURL|curl.c|curl_global_init, curl_easy_init, curl_easy_setopt, curl_easy_perform, curl_easy_cleanup, curl_global_cleanup|use libcurl to get webpage|
+|7|pipes|pipes.c|
+|8|threads|threads.c|
+|9|synchronization patterns|mutex.c, rendevouz.c, 
 
 ## Notes
 
@@ -103,7 +106,50 @@ curl_easy_cleanup(curl);
 curl_global_cleanup(); 
 ```
 
-### Consumer Producer Problem
+### Pipes
+
+### Threads
+```c
+#include <pthreads.h>
+int pthread_create(pthread_t *thread, const phread_attr_t *attr, void *(*start_routine)(void *), void *argument);
+void pthread_exit(void *retval);
+int pthread_join(pthread_t *thread, void **retval);
+int pthread_setcanceltype(int type, int *oldtype); /* PTHREAD_CANCEL_DEFERRED (default); PTHREAD_CANCEL_ASYNCHRONOUS */
+int pthread_testcancel(void);
+void pthread_cleanup_push(void (*routine)(void*), void *argument)
+void pthread_cleanup_pop(int execute)
+```
+
+### Synchronization Patterns
+A computer may have mutliple processes or threads executing concurrently (two events are concurrent if we cannot tell by looking at the program which will happen first). However, this may present a challenge when dealing with shared variables where two writers are writing to a variable or a reader and a writer access the same variable - The outcomes of every execution is non-deterministic.
+
+To solve this issue, we use semaphores to restrict access of a critical section to a number of processes or threads.
+
+#### Semaphores
+A semaphore is an integer that can be incremented or decremented only:
+1. When a thread decrements a semaphore, if the result is negative, the thread blocks itself and cannot continue until another thread increments the semaphore.
+2. When a thread increments the semaphore, if there are other threads waiting, one of the waiting threads gets unblocked.
+
+```c
+#include <semaphore.h>
+int sem_init(sem_t *semaphore, int shared, int init_value); /* shared = 0 (threads); shared = 1 (processes) */
+int sem_destroy(sem_t *semaphore);
+int sem_wait(sem_t *semaphore);
+int sem_post(sem_t *semaphore);
+```
+
+#### Mutual Exclusion
+Allow only one thread to be in the critical section at a time.
+
+#### Rendevouz
+Multiple threads arrive at a point of execution and no thread is allowed to continue until all threads have arrived.
+
+#### Barrier
+
+### Consumer-Producer Problem
+
+
+### Reader-Writer Problem
 
 ### Breadth-First-Search
 
