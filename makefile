@@ -4,7 +4,19 @@ LINKER = gcc
 LIB = -lz -lcurl
 
 # make all
-all: file_io.out fork.out signal_handling.out mailbox.out socket_client.out socket_server.out curl.out
+all: \
+	file_io.out \
+	fork.out \
+	signal_handling.out \
+	mailbox.out \
+	socket_client.out \
+	socket_server.out \
+	curl.out \
+	pipes.out \
+	threads.out \
+	mutex.out \
+	rendezvous.out \
+
 
 # link object file(s) and librarie(s) and create executable
 file_io.out: file_io.o
@@ -28,6 +40,18 @@ socket_server.out: socket_server.o
 curl.out: curl.o
 	$(LINKER) -o curl.out curl.o $(LIB)
 
+pipes.out: pipes.o
+	$(LINKER) -o pipes.out pipes.o
+	
+threads.out: threads.o
+	$(LINKER) -o threads.out threads.o
+	
+mutex.out: mutex.o
+	$(LINKER) -o mutex.out mutex.o
+
+rendezvous.out: rendezvous.o
+	$(LINKER) -o rendezvous.out rendezvous.o
+
 # compile object file from source file(s)
 file_io.o: file_io.c common.h
 	$(COMPILER) $(COMPILER_FLAGS) -o file_io.o file_io.c
@@ -49,6 +73,18 @@ socket_server.o: socket_server.c common.h
 
 curl.o: curl.c common.h
 	$(COMPILER) $(COMPILER_FLAGS) -o curl.o curl.c
+
+pipes.o: pipes.c common.h
+	$(COMPILER) $(COMPILER_FLAGS) -o pipes.o pipes.c
+
+threads.o: threads.c common.h
+	$(COMPILER) $(COMPILER_FLAGS) -o threads.o threads.c
+
+mutex.o: mutex.c common.h
+	$(COMPILER) $(COMPILER_FLAGS) -o mutex.o mutex.c
+
+rendezvous.o: rendezvous.c common.h
+	$(COMPILER) $(COMPILER_FLAGS) -o rendezvous.o rendezvous.c
 
 # make clean
 .PHONY: clean
