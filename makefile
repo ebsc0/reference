@@ -16,6 +16,7 @@ all: \
 	threads.out \
 	mutex.out \
 	rendezvous.out \
+	linked_list.out \
 
 
 # link object file(s) and librarie(s) and create executable
@@ -52,6 +53,9 @@ mutex.out: mutex.o
 rendezvous.out: rendezvous.o
 	$(LINKER) -o rendezvous.out rendezvous.o
 
+linked_list.out: linked_list.o
+	$(LINKER) -o linked_list.out linked_list.o
+
 # compile object file from source file(s)
 file_io.o: file_io.c common.h
 	$(COMPILER) $(COMPILER_FLAGS) -o file_io.o file_io.c
@@ -85,6 +89,9 @@ mutex.o: mutex.c common.h
 
 rendezvous.o: rendezvous.c common.h
 	$(COMPILER) $(COMPILER_FLAGS) -o rendezvous.o rendezvous.c
+	
+linked_list.o: linked_list.c common.h
+	$(COMPILER) $(COMPILER_FLAGS) -o linked_list.o linked_list.c
 
 # make clean
 .PHONY: clean
