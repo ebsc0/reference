@@ -144,12 +144,17 @@ Allow only one thread to be in the critical section at a time.
 #### Rendevouz
 Multiple threads arrive at a point of execution and no thread is allowed to continue until all threads have arrived.
 
-#### Barrier
-
 ### Consumer-Producer Problem
+Classic synchronization problem involving Producers producing data to a bounded-buffer, and Consumers consuming the data. 
 
+We must ensure that:
+1. only 1 Consumer or Producer can access the buffer at a time.
+2. Consumers cannot consume when the buffer is empty.
+3. Producers cannot produce when the buffer is full.
 
 ### Reader-Writer Problem
+
+### General Bizantine Problem
 
 ### Breadth-First-Search
 
