@@ -1,3 +1,4 @@
+#include <sys/wait.h>
 #include "common.h"
 
 int process_a()
@@ -18,7 +19,7 @@ int main()
     int parent_status, child_status;
 
     /* create fork */
-    pid_t pid = fork();
+    int pid = fork();
 
     if(pid < 0) /* check if fork was successful */
     {

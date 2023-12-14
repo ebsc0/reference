@@ -1,7 +1,7 @@
 COMPILER = gcc       
-COMPILER_FLAGS = -Wall -g -std=c99 -c
+COMPILER_FLAGS = -Wall -g -std=c99 -D_POSIX_C_SOURCE=200809 -c 
 LINKER = gcc       
-LIB = -lz -lcurl
+LIB = -lz -lcurl -lpthread
 
 # make all
 all: \
@@ -17,6 +17,7 @@ all: \
 	mutex.out \
 	rendezvous.out \
 	linked_list.out \
+	producer_consumer.out\
 
 
 # link object file(s) and librarie(s) and create executable
@@ -45,16 +46,19 @@ pipes.out: pipes.o
 	$(LINKER) -o pipes.out pipes.o
 	
 threads.out: threads.o
-	$(LINKER) -o threads.out threads.o
+	$(LINKER) -o threads.out threads.o $(LIB)
 	
 mutex.out: mutex.o
 	$(LINKER) -o mutex.out mutex.o
 
 rendezvous.out: rendezvous.o
-	$(LINKER) -o rendezvous.out rendezvous.o
+	$(LINKER) -o rendezvous.out rendezvous.o $(LIB)
 
 linked_list.out: linked_list.o
 	$(LINKER) -o linked_list.out linked_list.o
+
+producer_consumer.out: producer_consumer.o
+	$(LINKER) -o producer_consumer.out producer_consumer.o $(LIB)
 
 # compile object file from source file(s)
 file_io.o: file_io.c common.h
@@ -92,6 +96,9 @@ rendezvous.o: rendezvous.c common.h
 	
 linked_list.o: linked_list.c common.h
 	$(COMPILER) $(COMPILER_FLAGS) -o linked_list.o linked_list.c
+
+producer_consumer.o: producer_consumer.c common.h
+	$(COMPILER) $(COMPILER_FLAGS) -o producer_consumer.o producer_consumer.c
 
 # make clean
 .PHONY: clean
